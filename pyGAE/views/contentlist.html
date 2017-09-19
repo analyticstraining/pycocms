@@ -1,0 +1,43 @@
+{% extends "main.html" %}
+
+{% block maincontent %}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="navbar navbar-default navbar-flat">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <span class="navbar-brand">Pages</span>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                       {% if user and user.can_add_cms_pages %}
+                        <li><a href="/content/create"><i class="fa fa-plus"></i> Add new page</a></li>
+                       {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>    
+    </div>
+</div>
+<div class="row">
+    
+    <div class="col-md-10">
+        <table class="table table-hover">
+            <tbody>
+                    {% for content in contents %}
+                <tr>
+                    <td><h4><a href="/content/{{content.id}}">{{content.title}}</a></h4></td>
+                    <td class="p-t-20"><span>{{content.content|striptags|safe}}</span></td>
+                    <td class="p-t-20"><span>{{content.created_by}}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+       
+        
+      
+        </table>
+    </div>
+</div>
+{% endblock %}

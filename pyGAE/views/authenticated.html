@@ -1,0 +1,11 @@
+{% extends "main.html" %}
+
+{% block maincontent %}
+
+<h1>Congratulations {{ user.name }}!</h1>
+<p>{{user_info}}</p>
+<p>{{user}}</p>
+<p>Email: {{user.email_address}}</p>
+<p>You verified your email successfully. Feel free to browse around.</p>
+
+{% endblock %}

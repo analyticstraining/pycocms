@@ -1,0 +1,84 @@
+{% extends "main.html" %}
+
+{% block title %}Register a new user{% endblock %}
+
+{% block maincontent %}
+<div class="row">
+    <div class="col-md-6 col-md-offset-1">
+        
+        {% if error %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Error</strong> {{error}}
+        </div>
+        {% endif %}
+
+       
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-md-offset-1">
+        <h1>Register a new user</h1>
+        <form action="/user/create" method="POST">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" name="username" required/>
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="text" class="form-control" name="email" required/>
+            </div>
+
+            <div class="form-group">
+                <label for="role">Role</label>
+                <select class="form-control" name="role" value="{{edit_user.role}}">
+                    <option value="user" >User</option>
+                    <option value="editor">Editor</option>
+                    <option value="admin">Administrator</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="subscription">Subscription</label>
+                <select class="form-control" name="subscription">
+                    <option value="basic">Basic</option>
+                    <option value="silver">Silver</option>
+                    <option value="gold">Gold</option>
+                </select>
+    
+            </div>
+
+            <div class="form-group">
+                <label for="expiration_day">Expiration Date</label>
+                <div class="input-group">
+                        <input type="text"  class="form-control" style="width:5em;" name="expiration_day" placeholder="DD"
+                        />
+                        <input type="text"  class="form-control" style="width:5em;" name="expiration_month" placeholder="MM"
+                        />
+                        <input type="text"  class="form-control" style="width:5em;" name="expiration_year" placeholder="YYYY"
+                        />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" required/>
+            </div>
+            <div class="form-group">
+                <label for="password2">Password (Check)</label>
+                <input type="password" class="form-control" name="password2" required/>
+            </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text"  class="form-control" name="name" required/>
+            </div>
+            <div class="form-group">
+                <label for="lastname">Last Name</label>
+                <input type="text"  class="form-control" name="lastname" required/>
+            </div>
+
+            <input type="submit" class="btn btn-primary" value="Create User" />
+        </form>
+    </div>
+</div>
+{% endblock %}

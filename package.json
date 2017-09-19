@@ -1,0 +1,44 @@
+{
+  "name": "pygae-cms",
+  "version": "0.1.0",
+  "description": "A simple CMS-like app based on GAE",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/analyticstraining/pycocms.git"
+  },
+  "keywords": [
+    "GAE",
+    "Python",
+    "CMS"
+  ],
+  "author": "Riccardo Trocca, Analytics Training",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.2.1"
+  },
+  "devDependencies": {
+    "del": "^3.0.0",
+    "glob": "^7.1.2",
+    "gulp": "^3.9.1",
+    "gulp-changed": "^3.1.0",
+    "gulp-clean-css": "^3.8.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-jshint": "^2.0.4",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8",
+    "jscs": "^3.0.7",
+    "jshint": "^2.9.5",
+    "lodash": "^4.17.4",
+    "map-stream": "0.0.7",
+    "run-sequence": "^2.1.0",
+    "streamqueue": "^1.1.1"
+  }
+}

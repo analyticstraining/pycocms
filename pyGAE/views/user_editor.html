@@ -1,0 +1,115 @@
+{% extends "main.html" %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block maincontent %}
+
+{% if user_updated %}
+<div class="row">
+    <div class="col-md-6 col-md-offset-1">
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Success</strong> User Information were updated successfully.<br/>
+            You can go back to <a href="/manage/users">User Manager</a>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+<div class="row">
+    <div class="col-md-6 col-md-offset-1">
+        <h3>User Profile</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-md-offset-1">
+        
+        {% if error %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Error</strong> {{error}}
+        </div>
+        {% endif %}
+
+       
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-md-offset-1">
+            
+    <form action="/user/edit/{{edit_user.user_id}}" method="POST">
+        <div class="form-group">
+                <label for="username">Username</label>
+                <p class="form-control-static">{{edit_user.auth_ids.0}}</p>
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <p class="form-control-static">{{edit_user.email_address}}</p>
+            </div>
+
+            <div class="form-group">
+                <label for="role">Role</label>
+                <select class="form-control" name="role" value="{{edit_user.role}}">
+                    <option value="user" {% if edit_user.role == 'user' %} selected {% endif %} >User</option>
+                    <option value="editor" {% if edit_user.role == 'editor' %} selected {% endif %}>Editor</option>
+                    <option value="admin" {% if edit_user.role == 'admin' %} selected {% endif %}>Administrator</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="subscription">Subscription</label>
+                <select class="form-control" name="subscription" value="{{edit_user.subscription}}">
+                    <option value="base" {% if edit_user.subscription == 'basic' %} selected {% endif %} >Basic</option>
+                    <option value="silver" {% if edit_user.subscription == 'silver' %} selected {% endif %}>Silver</option>
+                    <option value="gold" {% if edit_user.subscription == 'gold' %} selected {% endif %}>Gold</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Expiration Date</label>
+                <div class="input-group">
+                        <input type="text"  class="form-control" style="width:5em;" name="expiration_day" placeholder="DD"
+                        {%if edit_user.subscription_expiration_date %}
+                            value="{{edit_user.subscription_expiration_date.day}}"
+                        {% endif %}
+                        />
+                        <input type="text"  class="form-control" style="width:5em;" name="expiration_month" placeholder="MM"
+                        {%if edit_user.subscription_expiration_date %}
+                            value="{{edit_user.subscription_expiration_date.month}}"
+                        {% endif %}
+                        />
+                        <input type="text"  class="form-control" style="width:5em;" name="expiration_year" placeholder="YYYY"
+                        {%if edit_user.subscription_expiration_date %}
+                            value="{{edit_user.subscription_expiration_date.year}}"
+                        {% endif %}
+                        />
+                </div>
+            </div>
+            <!--
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" />
+            </div>
+            <div class="form-group">
+                <label for="password2">Password (check)</label>
+                <input type="password" class="form-control" name="password2" />
+            </div>
+            -->
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text"  class="form-control" name="name" value="{{edit_user.name}}" />
+            </div>
+            <div class="form-group">
+                <label for="lastname">Last Name</label>
+                <input type="text"  class="form-control" name="last_name" value="{{edit_user.last_name}}"/>
+            </div>
+
+            <input type="submit" class="btn btn-primary" value="Update User Info" />
+
+    </form>
+    
+</div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "main.html" %}
+
+{% block title %}Edit Content{% endblock %}
+
+{% block maincontent %}
+<pre>{{content}}</pre>
+<div class="row">
+    <div class="col-md-6">
+        <h3>Edit Content</h3>
+        <form action="/content/edit/{{id}}" method="POST"> 
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" name="title" value="{{title}}"/>
+            </div>
+
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea rows="10" class="form-control" name="content">{{content.content}}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="visibility">Visibility</label>
+                <select class="form-control" name="visibility" value="{{content.visibility}}">
+                    <option value="2" {% if content.visibility == 2 %} selected {% endif %}>Public</option>
+                    <option value="1" {% if content.visibility == 1 %} selected {% endif %}>Users Only</option>
+                    <option value="0" {% if content.visibility == 0 %} selected {% endif %}>Private</option>
+                </select>
+            </div>
+            <div class="form-group">
+                    <label>Required Subscription</label>
+            <div class="checkbox">
+                
+                <label>
+                  <input type="checkbox"  name="subscriptions" value="basic"
+                  {% if 'basic' in content.subscriptions %}
+                    checked="checked"
+                  {% endif %}
+                  >
+                  Basic
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox"  name="subscriptions" value="silver"
+                  {% if 'silver' in content.subscriptions %}
+                  checked="checked"
+                  {% endif %}
+                  >
+                  Silver
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox"  name="subscriptions" value="gold"
+                  {% if 'gold' in content.subscriptions %}
+                  checked="checked"
+                {% endif %}
+                  >
+                  Gold
+                </label>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary"> <i class="fa fa-save"></i>&nbsp;&nbsp;Update </button> 
+
+            <a href="/content/delete/{{id}}" class="btn btn-danger"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;Delete</a>
+                
+            </form>
+
+        </form>
+        
+    </div>
+</div>
+{% endblock %}
