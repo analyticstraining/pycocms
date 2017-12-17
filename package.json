@@ -1,6 +1,6 @@
 {
   "name": "pygae-cms",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A simple CMS-like app based on GAE",
   "main": "index.js",
   "scripts": {
