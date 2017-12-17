@@ -21,6 +21,7 @@ class UserEditorHandler(BaseHandler):
         name = self.request.get('name')
         last_name = self.request.get('last_name')
         role = self.request.get('role')
+        subscription = self.request.get('subscription')
 
         expiration_day = self.request.get('expiration_day').strip()
         expiration_month = self.request.get('expiration_month').strip()
@@ -37,5 +38,6 @@ class UserEditorHandler(BaseHandler):
         edit_user.name = name
         edit_user.last_name = last_name
         edit_user.role = role
+        edit_user.subscription = subscription
         edit_user.put()
         self.render_template('user_editor.html', {'edit_user': edit_user, 'user_updated': True})

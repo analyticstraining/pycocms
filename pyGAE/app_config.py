@@ -12,3 +12,6 @@ APP_CONFIG = {
         'secret_key': 'YOUR_SECRET_KEY'
     }
 }
+
+APP_NAME = "pycoCMS"
+MAIL_SENDER = 'pycoCMS@pycoCMS.org'

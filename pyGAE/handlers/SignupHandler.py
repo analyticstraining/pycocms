@@ -1,6 +1,10 @@
 from google.appengine.api import mail
-from BaseHandler import BaseHandler, user_required, admin_required
+from BaseHandler import BaseHandler, user_required, admin_required, app_name
+from google.appengine.ext.webapp import template
+from SendSiteEmail import send_signup_email
+import os.path
 import logging
+import app_config
 
 class SignupHandler(BaseHandler):
     def get(self):
@@ -34,20 +38,23 @@ class SignupHandler(BaseHandler):
 
         token = self.user_model.create_signup_token(user_id)
 
-        verification_url = self.uri_for('verification', type='v', user_id=user_id,
-        signup_token=token, _full=True)
+        verification_url = self.uri_for('verification', type='v', user_id=user_id, signup_token=token, _full=True)
+        home_url = self.uri_for('home')
         logging.info(verification_url)
-        msg = 'Send an email to user in order to verify their address. \
-            They will be able to do so by visiting <a href="{url}">{url}</a>'
-        self.display_message(msg.format(url=verification_url))
-        logging.info('Try to send email')
+
+        send_signup_email( {'user_name': user_name, 'name': name, 'last_name': last_name, 'email': email}, home_url, verification_url)
         
-        try:
-            message = mail.EmailMessage()
-            message.sender = "info@analyticstraining.it"
-            message.to = email
-            message.subject = "Registration to AT Tools"
-            message.html = msg.format(url=verification_url)
-            message.send()
-        except Exception as e:
-            logging.info("Some error occurred %s", str(e))
+        self.redirect(self.uri_for('signedup', user_id=user_id), abort=True)
+
+class SignedUpHandler(BaseHandler): 
+    def get(self, *args, **kwargs):
+        
+        user_id = kwargs['user_id']
+        logging.info('SignedUp Handler %s', user_id)
+        target_user = self.user_model.get_by_user_id(int(user_id))
+        if not target_user:
+            self.abort(404)
+        self.render_template('signedup.html', {
+            'mail_sender': app_config.MAIL_SENDER,
+            'target_user': target_user
+        })

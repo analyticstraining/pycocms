@@ -8,6 +8,10 @@ import webapp2
 from webapp2_extras import auth
 from webapp2_extras import sessions
 
+import app_config
+
+app_name = app_config.APP_NAME
+
 def roles_required(*roles):
     def required_decorator(handler):
         logging.info('role_required %s ' % (str(roles)))
@@ -53,6 +57,31 @@ def admin_required(handler):
                 return handler(self, *args, **kwargs)
     return check_login
 
+def subscription_required(subscription):
+    def subscription_decorator(handler):
+        logging.info('subscription_required %s' % (subscription))
+        def check(self, *args, **kwargs):
+            logging.info('checking subscription_required')
+            authorized = False
+            user_info = self.auth.get_user_by_session()
+            if not user_info:
+                self.redirect(self.uri_for('login'), abort=True)
+            else:
+                user = self.user_model.get_by_id(user_info['user_id'])
+                if user.is_cms_admin:
+                    authorized = True
+                elif subscription == 'silver':
+                    authorized = user.subscription == 'silver' or user.subscription == 'gold'
+                elif subscription == 'gold':
+                    authorized = user.subscription == 'gold'
+                logging.info('subscription_required ok: %s' % (str(authorized)))
+                if authorized:
+                    return handler(self, *args, **kwargs)
+                else:
+                    self.redirect(self.uri_for('subscription_required_' + subscription), abort=True)
+        return check
+    return subscription_decorator
+
 class BaseHandler(webapp2.RequestHandler):
     @webapp2.cached_property
     def auth(self):
@@ -97,7 +126,7 @@ class BaseHandler(webapp2.RequestHandler):
         """Shortcut to access the current session."""
         return self.session_store.get_session(backend="datastore")
 
-    def render_template(self, view_filename, params=None, scripts=[]):
+    def render_template(self, view_filename, params=None, scripts=[], styles=[]):
         '''
         render_template('view file name', {params})
         Renders a view template. Implicit parameters:
@@ -117,13 +146,21 @@ class BaseHandler(webapp2.RequestHandler):
         
         for script in scripts:
             page_scripts.append(base_scripts_path + '/' + script)
+        params['app_name'] = app_name
         params['user_info'] = self.user_info
         params['user'] = self.user
         params['host_url'] = self.request.host_url
         params['page_scripts'] = page_scripts
-        params['styles'] = self.request.host_url + '/css'
+        params['stylespath'] = self.request.host_url + '/css'
+        if styles:
+            params['page_styles'] = styles
         # shameless hack, remove that '..'
         path = os.path.join(os.path.dirname(__file__), '../views', view_filename)
+        #if section:
+        #    path= os.path.join(path, section)
+        #path = os.path.join(path, view_filename)
+
+        logging.info('template path: %s' %( path))
         self.response.out.write(template.render(path, params))
 
     def display_message(self, message):

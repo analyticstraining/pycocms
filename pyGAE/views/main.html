@@ -4,46 +4,39 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}pycoCMS{% endblock %}</title>
-    <link href="{{styles}}/bootstrap.min.css" rel="stylesheet"/>
-    <link href="{{styles}}/ui-bootstrap-csp.css" rel="stylesheet"/>
-    <link href="{{styles}}/font-awesome.min.css" rel="stylesheet"/>
-    <link href="{{styles}}/app.min.css" rel="stylesheet"/>
+    <title>{% block title %}{{app_name}}{% endblock %}</title>
+    <link href="{{stylespath}}/bootstrap.min.css" rel="stylesheet"/>
+    <link href="{{stylespath}}/ui-bootstrap-csp.css" rel="stylesheet"/>
+    <link href="{{stylespath}}/font-awesome.min.css" rel="stylesheet"/>
+    <link href="{{stylespath}}/app.min.css" rel="stylesheet"/>
+    {% for style in page_styles %}
+        <link href="{{stylespath}}/{{style}}" rel="stylesheet"/>
+    {% endfor %}
   </head>
 
   <body>
 
   <div class="navbar navbar-default">
       <div class="container-fluid">
-          <div class="navbar-header">
-              <span class="navbar-brand">pycoCMS</span>
-          </div>
+          {% include "navbar_brand.html" %}
          <div class="collapse navbar-collapse">
              <ul class="nav navbar-nav">
+
                  <li><a href="/">Home</a></li>
+                 
                  <li><a href="/content">Content</a></li>
-                 {% if user.is_cms_admin %}
-                 <li><a href="/manage/users">User Manager</a></li>
+                 {% if user %}
+                 
+                 {% if user.subscription == "silver" or user.is_cms_admin %}
+                 
                  {% endif %}
+
+                 {% endif %}
+                 {% include "navbar_usermanager.html" %}
+                 
              </ul>
 
-             <ul class="nav navbar-nav navbar-right">
-                    {% if not user %}
-                        <li><a href="/login">Login</a></li>
-                    {% else %}
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> {{user.name}} <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                
-                                <li><a href="/user/profile">Profile</a></li>
-                                {% if not user.is_cms_admin %}
-                                <li><a href="/user/subscription">Subscription</a></li>
-                                {% endif %}
-                                <li><a href="/logout">Logout</a></li>
-                            </ul>
-                        </li>
-                    {% endif %}
-            </ul>
+             {% include "navbar_login.html" %}
          </div>
       </div>
   </div>

@@ -1,0 +1,15 @@
+<html>
+        <body>
+            Hello <strong>{{user.name}}</strong>, <br> welcome to <a href="{{home_url}}">{{app_name}}</a>. You signed up for accessing the {{app_name}} web site. We signed you up for access to our site. <br>Your data are:<br>
+            <ul>
+                <li><strong>User Name</strong>:{{user.user_name}}</li>
+                <li><strong>Email address</strong>:{{user.email]}</li>
+                <li><strong>Password</strong>: {{user.password}} <em>Plase change the password as soon as you log in.</em></li>
+            </ul><br>
+            Please click <a href="{{verification_url}}">here</a> to confirm the subscription or copy and paste the following URL into your browser:
+            <p><a href="{{verification_url}}">{{verification_url}}</a></p> 
+            We are happy to have you on board!<br>
+            <br>
+            <strong>The {{app_name}} Team</strong>
+        </body>
+    </html>

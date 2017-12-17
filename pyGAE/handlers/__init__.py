@@ -6,6 +6,7 @@ from HomeHandler import *
 from LoginHandler import *
 from LogoutHandler import *
 from ManageSubscriptionHandler import *
+from MainPageHandler import *
 from SetPasswordHandler import *
 from SignupHandler import *
 from UnauthorizedHandler import *
@@ -20,6 +21,7 @@ __all__ = [
     "BaseHandler", 
     "user_required", 
     "admin_required",
+    "subscription_required",
     "CreateContentHandler", 
     "DeleteContentHandler", 
     "EditContentHandler",  
@@ -27,8 +29,10 @@ __all__ = [
     "HomeHandler",
     "LoginHandler",
     "LogoutHandler",
+    "MainPageHandler",
     "ManageSubscriptionHandler",
     "SetPasswordHandler",
+    "SignedUpHandler",
     "SignupHandler",
     "UnauthorizedHandler",
     "UserCreateHandler",

@@ -20,12 +20,12 @@ class User(webapp2_extras.appengine.auth.models.User):
         """
         self.password = security.generate_password_hash(raw_password, length=12)
 
-    '''@classmethod
-    def get_by_id(cls, user_id):
+    @classmethod
+    def get_by_user_id(cls, user_id):
         user_key = ndb.Key(cls, user_id)
-        user = ndb.get(user_key)
+        user = user_key.get()
         return user
-    '''
+    
     @classmethod
     def get_by_auth_token(cls, user_id, token, subject='auth'):
         """Returns a user object based on a user ID and token.
@@ -48,6 +48,7 @@ class User(webapp2_extras.appengine.auth.models.User):
 
         return None, None
     
+
     @property
     def is_cms_admin(self):
         return self.role == 'admin'

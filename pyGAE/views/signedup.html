@@ -1,0 +1,19 @@
+{% extends "main.html" %}
+
+{% block title %}New user signed up{% endblock %}
+
+{% block maincontent %}
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <h2>Verification email sent.</h2>
+        <p>We received your request to sign up to the {{app_name}} web site.<br>
+           A verification email has been sent to the email address <strong>{{target_user.email_address}}</strong>.
+            Click on the verification link in the email to activate your subscription.<br> In case you did not receive the email check your mail and spam filters. The email sender is <strong>{{mail_sender}}</strong></p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12" style="margin-top:40px;">
+        <center><a href="/" class="btn btn-primary">Back to Home Page</a></center>
+    </div>
+</div>
+{% endblock %}

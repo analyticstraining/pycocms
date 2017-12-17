@@ -3,10 +3,17 @@
 {% block maincontent %}
 
 <div class="jumbotron">
-    <h1>pycoCMS</h1>
+    <h1>{{app_name}}</h1>
     <p>Welcome to pycoCMS a (really) simple Content Management System developed on top of GAE in Python.</p>
     <p><i>Created by <a href="http://www.analyticstraining.it">Analytics Training</a></i</p>
-    <p><a class="btn btn-primary btn-lg" href="/signup" role="button">Register</a></p>
+    <p>
+        <center>
+            <a class="btn btn-primary btn-lg" href="/signup" role="button">Register</a> <br>
+            or
+            <br>
+             <a class="btn btn-default" href="/login" role="button">Login</a>
+        </center>
+    </p> 
   </div>
 
 

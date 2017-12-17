@@ -1,0 +1,15 @@
+{% extends "main.html" %}
+
+{%block title %} Welcome {% endblock %}
+{% block maincontent %}
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <h1>Welcome!</h1>
+        <p>Welcome to {{app_name}} {{user.name}}.<br>
+        You are now a registered member of our web site. You can use our exclusive application. If you need help do not hesitate to contact us.<br>
+        <br>
+        <i>The {{app_name}} Team.</i>
+        </p>
+    </div>
+</div>
+{% endblock %}
