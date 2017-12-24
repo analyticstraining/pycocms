@@ -7,7 +7,7 @@ class CreateContentHandler(BaseHandler):
     @roles_required('editor', 'admin')
     def get(self):
         # retrieve all posts
-        self.render_template('createcontent.html')
+        self.render_template('createcontent.html', scripts=['tinymce.min.js', 'content_editor.js'])
 
     @roles_required('editor', 'admin')
     def post(self):
@@ -50,7 +50,8 @@ class EditContentHandler(BaseHandler):
                              {'id': page_id,
                               'title': content.title,
                               'content': content,
-                             })
+                             }, 
+                             scripts=['tinymce.min.js', 'content_editor.js'])
 
     @roles_required('editor', 'admin')
     def post(self, *args, **kwargs):

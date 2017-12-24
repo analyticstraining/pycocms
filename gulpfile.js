@@ -17,6 +17,7 @@ let BUILD_RELEASE = false,
         './package.json',
     ],
     nodeModulesPath = 'node_modules/',
+    appFilespath = 'src/',
     distPath,
     outputFiles; 
 
@@ -42,7 +43,6 @@ function createOutputFilesAndDistPath() {
 }
 
 gulp.task('copy-fonts', function () {
- 
     let fontFiles = [
             nodeModulesPath + 'bootstrap/dist/fonts/*.*',
             nodeModulesPath + 'font-awesome/fonts/*.*'
@@ -71,12 +71,50 @@ gulp.task('copy-styles', function() {
     ;
 });
 
+gulp.task('copy-tinymce-plugins', function() {
+    let jsFiles = [
+            nodeModulesPath + 'tinymce/themes/modern/theme.min.js',
+        ],
+        destinationPath = distPath + 'js/themes/modern/';
+
+    let pluginPath = nodeModulesPath + 'tinymce/plugins/';
+    let pluginDstPath = distPath + 'js/plugins/';
+
+    function addPlugin(name) {
+        gulp.src([pluginPath + name + '/**.*' ]).pipe(buildTools.changed(pluginDstPath + name)).pipe(gulp.dest(pluginDstPath + name));
+    }
+    addPlugin('code');
+    addPlugin('link');
+    addPlugin('fullscreen');
+    return gulp
+        .src(jsFiles)
+        .pipe(buildTools.changed(destinationPath))
+        .pipe(gulp.dest(destinationPath))
+    ;
+});
+
+gulp.task('copy-tinymce-styles', function() {
+    let jsFiles = [
+            nodeModulesPath + 'tinymce/skins/lightgray/**.*',
+            nodeModulesPath + 'tinymce/skins/lightgray/**/**.*',
+        ],
+        destinationPath = distPath + 'js/skins/lightgray/';
+
+    return gulp
+        .src(jsFiles)
+        .pipe(buildTools.changed(destinationPath))
+        .pipe(gulp.dest(destinationPath))
+    ;
+});
+
 gulp.task('copy-scripts', function(){
 
     let destinationPath = distPath +'js/',
         jsLibScripts = [
             nodeModulesPath + 'jquery/dist/jquery.min.js',
             nodeModulesPath + 'bootstrap/dist/js/bootstrap.min.js',
+            nodeModulesPath + 'tinymce/tinymce.min.js',
+            appFilespath + 'editor/content_editor.js'
         ];
     return gulp
         .src(jsLibScripts)
@@ -118,6 +156,8 @@ gulp.task('build-debug', function () {
     createOutputFilesAndDistPath();
     runSequence.apply(this, [
         'copy-scripts',
+        'copy-tinymce-plugins',
+        'copy-tinymce-styles',
         'copy-fonts',
         'copy-styles',
         'compile-styles'
