@@ -25,9 +25,10 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/user/profile', UserProfileHandler, name='userprofile'),
     webapp2.Route('/user/subscription', ManageSubscriptionHandler, name='managesubscription'),
     webapp2.Route('/authenticated', AuthenticatedHandler, name='authenticated'),
-    webapp2.Route('/content/create', CreateContentHandler, name='createContent'),
+    #webapp2.Route('/content/create', CreateContentHandler, name='createContent'),
     webapp2.Route('/content/delete/<page:.+>', DeleteContentHandler, name='deleteContent'),
-    webapp2.Route('/content/edit/<page:.+>', EditContentHandler, name='createContent'),
+    webapp2.Route('/content/edit/<page:.+>', EditContentHandler, name='editContent'),
+    webapp2.Route('/content/edit/', EditContentHandler, name='createContent'), 
     webapp2.Route('/content/<page:.+>', ViewContentHandler, name="viewContent"),
     webapp2.Route('/content', ViewContentHandler, name="viewContent"),
     # give the name "mainPage" to some other page if necessary. This will be the page to go after login.

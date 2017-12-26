@@ -1,5 +1,4 @@
 from BaseHandler import BaseHandler, user_required
-from models import MyContent
 import logging
 from google.appengine.ext import ndb
 

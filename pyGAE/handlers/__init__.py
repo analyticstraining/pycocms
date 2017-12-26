@@ -22,7 +22,6 @@ __all__ = [
     "user_required", 
     "admin_required",
     "subscription_required",
-    "CreateContentHandler", 
     "DeleteContentHandler", 
     "EditContentHandler",  
     "ForgotPasswordHandler",

@@ -1,5 +1,4 @@
 from BaseHandler import BaseHandler, user_required, admin_required
-from models import MyContent
 import logging
 import datetime
 from google.appengine.ext import ndb

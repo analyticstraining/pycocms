@@ -3,32 +3,6 @@ from models import MyContent
 import logging
 from google.appengine.ext import ndb
 
-class CreateContentHandler(BaseHandler):
-    @roles_required('editor', 'admin')
-    def get(self):
-        # retrieve all posts
-        self.render_template('createcontent.html', scripts=['tinymce.min.js', 'content_editor.js'])
-
-    @roles_required('editor', 'admin')
-    def post(self):
-        title = self.request.get('title')
-        description = self.request.get('description')
-        content = self.request.get('content')
-        visibility = int(self.request.get('visibility'))
-        subscriptions = self.request.get('subscriptions', allow_multiple=True)
-        user = self.user
-        logging.info('creating content for user %s' % (user.email_address))
-        myContent = MyContent(title=title,
-                              description=description,
-                              content_type='page',
-                              content=content,
-                              visibility=visibility,
-                              subscriptions=subscriptions,
-                              created_by_user_id=user.get_id(),
-                              modified_by_user_id=user.get_id())
-        key = myContent.put()
-        self.display_message('Content created <a href="/content/%s">%s</a>' % (key.urlsafe(),key.urlsafe()))
-
 class DeleteContentHandler(BaseHandler):
     @roles_required('editor', 'admin')
     def get(self, *args, **kwargs):
@@ -43,30 +17,67 @@ class EditContentHandler(BaseHandler):
     @roles_required('editor', 'admin')
     def get(self, *args, **kwargs):
         logging.info('EditContentHandler')
-        page_id = kwargs['page']
-        key = ndb.Key(urlsafe=page_id)
-        content = key.get()
+        if 'page' in kwargs:
+            logging.info('EditContentHandler: create new page')
+            page_id = kwargs['page']
+            logging.info('page: %s' % (page_id))
+            is_new = False
+            key = ndb.Key(urlsafe=page_id)
+            content = key.get()
+        else:
+            page_id = ''
+            is_new = True
+            content={'title': '', 'content': '', 'visibility': 2, 'subscriptions':['basic'], 'slug': ''}
+        #page_id = kwargs['page']
+        #key = ndb.Key(urlsafe=page_id)
+        #content = key.get()
         self.render_template('editcontent.html',
                              {'id': page_id,
-                              'title': content.title,
+                              'is_new': is_new,
                               'content': content,
                              }, 
                              scripts=['tinymce.min.js', 'content_editor.js'])
 
     @roles_required('editor', 'admin')
     def post(self, *args, **kwargs):
-        content_id = kwargs['page']
-        key = ndb.Key(urlsafe=content_id)
-        content = key.get()
-        logging.info(str(content))
-        content.title = self.request.get('title')
-        content.description = self.request.get('description')
-        logging.info('description: ' + content.description)
-        content.content = self.request.get('content')
-        content.visibility = int(self.request.get('visibility'))
-        content.subscriptions = self.request.get('subscriptions', allow_multiple=True)
-        content.put()
-        self.display_message('Content updated <a href="/content/%s">%s</a>' % (key.urlsafe(),key.urlsafe()))
+        title = self.request.get('title')
+        description = self.request.get('description')
+        content = self.request.get('content')
+        visibility = int(self.request.get('visibility'))
+        subscriptions = self.request.get('subscriptions', allow_multiple=True)
+        user = self.user
+        modified_by_user_id = user.get_id()
+        #key = myContent.put()
+        if 'page' in kwargs:
+            content_id = kwargs['page']
+            logging.info('content edit POST content_id %s' % (content_id))
+        
+            key = ndb.Key(urlsafe=content_id)
+            myContent = key.get()
+            logging.info(str(myContent))
+            myContent.title = title
+            myContent.description = description
+            logging.info('description: ' + myContent.description)
+            myContent.content = content
+            myContent.visibility = visibility
+            myContent.subscriptions = subscriptions
+            myContent.modified_by_user_id = modified_by_user_id
+        else:
+            content_id = None
+            logging.info('creating content for user %s' % (user.email_address))
+            myContent = MyContent(title=title,
+                                  description=description,
+                                  content_type='page',
+                                  content=content,
+                                  visibility=visibility,
+                                  subscriptions=subscriptions,
+                                  created_by_user_id=user.get_id(),
+                                  modified_by_user_id=modified_by_user_id)
+        key = myContent.put()
+        if content_id == None:
+            self.display_message('Content created <a href="/content/%s">%s</a>' % (key.urlsafe(),key.urlsafe()))
+        else:
+            self.display_message('Content updated <a href="/content/%s">%s</a>' % (key.urlsafe(),key.urlsafe()))
 
 class ViewContentHandler(BaseHandler):
 
@@ -77,6 +88,7 @@ class ViewContentHandler(BaseHandler):
         #id = None
         if kwargs.has_key('page'):
             page_id = kwargs['page']
+            logging.info('page_id %s' % (page_id))
             #retrieve specific content
             key = ndb.Key(urlsafe=page_id)
             content = key.get()

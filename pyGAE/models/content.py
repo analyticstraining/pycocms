@@ -3,7 +3,7 @@ from google.appengine.ext import ndb
 class MyContent(ndb.Model):
     """Class to model the CMS content"""
     title = ndb.StringProperty(required=True)
-    url = ndb.TextProperty(required=False) #User can provide a "friendly name" for the content in order to have a human readable URL
+    slug = ndb.TextProperty(required=False) #User can provide a "friendly name" for the content in order to have a human readable URL
     description = ndb.TextProperty(required=False)
     content_type = ndb.TextProperty(required=True) # page | app |something else
     content = ndb.TextProperty(required=True)
