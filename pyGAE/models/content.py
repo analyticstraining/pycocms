@@ -3,9 +3,10 @@ from google.appengine.ext import ndb
 class MyContent(ndb.Model):
     """Class to model the CMS content"""
     title = ndb.StringProperty(required=True)
-    slug = ndb.TextProperty(required=False) #User can provide a "friendly name" for the content in order to have a human readable URL
+    slug = ndb.StringProperty(required=False) #User can provide a "friendly name" for the content in order to have a human readable URL
+    # Deprecated, it's going to be removed
     description = ndb.TextProperty(required=False)
-    content_type = ndb.TextProperty(required=True) # page | app |something else
+    content_type = ndb.StringProperty(required=True) # page | app |something else
     content = ndb.TextProperty(required=True)
     visibility = ndb.IntegerProperty(required=True) #public | private
     subscriptions = ndb.StringProperty(required=False, repeated=True) # needed only when an item has public visibility
