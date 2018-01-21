@@ -18,28 +18,29 @@
   "author": "Riccardo Trocca, Analytics Training",
   "license": "MIT",
   "dependencies": {
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^4.0.0",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
+    "popper.js": "^1.12.9",
     "tinymce": "^4.7.4"
   },
   "devDependencies": {
     "del": "^3.0.0",
     "glob": "^7.1.2",
     "gulp": "^3.9.1",
-    "gulp-changed": "^3.1.0",
-    "gulp-clean-css": "^3.8.0",
+    "gulp-changed": "^3.2.0",
+    "gulp-clean-css": "^3.9.2",
     "gulp-concat": "^2.6.1",
-    "gulp-jshint": "^2.0.4",
+    "gulp-jshint": "^2.1.0",
     "gulp-load-plugins": "^1.5.0",
-    "gulp-sourcemaps": "^2.6.1",
+    "gulp-sourcemaps": "^2.6.3",
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
     "jscs": "^3.0.7",
     "jshint": "^2.9.5",
     "lodash": "^4.17.4",
     "map-stream": "0.0.7",
-    "run-sequence": "^2.1.0",
-    "streamqueue": "^1.1.1"
+    "run-sequence": "^2.2.1",
+    "streamqueue": "^1.1.2"
   }
 }

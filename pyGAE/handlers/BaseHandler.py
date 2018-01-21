@@ -68,19 +68,26 @@ def subscription_required(subscription):
                 self.redirect(self.uri_for('login'), abort=True)
             else:
                 user = self.user_model.get_by_id(user_info['user_id'])
+                # Found a case in which this happens, even it might be caused by bad cookies.
+                # It is a strange situation in which we have user_info but no user for them.
+                if not user:
+                    self.redirect(self.uri_for('login'), abort=True)
                 if user.is_cms_admin:
                     authorized = True
-                elif subscription == 'silver':
-                    authorized = user.subscription == 'silver' or user.subscription == 'gold'
-                elif subscription == 'gold':
-                    authorized = user.subscription == 'gold'
-                logging.info('subscription_required ok: %s' % (str(authorized)))
+                else:
+                    (user_subscription, is_expired) = user.check_subscription()
+                    if subscription == 'silver':
+                        authorized = user_subscription == 'silver' or user_subscription == 'gold'
+                    elif subscription == 'gold':
+                        authorized = user_subscription == 'gold'
+                    logging.info('subscription_required ok: %s (is_expired %s)' % (str(authorized), str(is_expired)))
                 if authorized:
                     return handler(self, *args, **kwargs)
                 else:
-                    self.redirect(self.uri_for('subscription_required_' + subscription), abort=True)
+                    self.redirect(self.uri_for('subscription_required', subscription=subscription, expired= is_expired), abort=True)
         return check
     return subscription_decorator
+
 
 class BaseHandler(webapp2.RequestHandler):
     @webapp2.cached_property

@@ -1,0 +1,14 @@
+{% extends "main.html" %}
+
+{% block maincontent %}
+
+<div class="jumbotron">
+    <h1>Subscription Required</h1>
+    <p>You need a Pro subscription in order to access this page.</p>
+    {% if is_expired %}
+    <p>It looks like your subscription is expired. Please renew it if you want to continue using our Pro tools.</p>
+    {% endif %}
+  </div>
+
+
+{% endblock %}

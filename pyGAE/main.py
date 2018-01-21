@@ -12,6 +12,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/', HomeHandler, name='home'),
     webapp2.Route('/signup', SignupHandler),
     webapp2.Route('/signedup/<user_id:\d+>', SignedUpHandler, name='signedup'),
+    webapp2.Route('/subscriptionrequired/<subscription>-<expired>',
+                  handler=SubscriptionRequiredHandler, name='subscription_required'),
     webapp2.Route('/<type:v|p>/<user_id:\d+>-<signup_token:.+>',
       handler=VerificationHandler, name='verification'),
     webapp2.Route('/password', SetPasswordHandler),

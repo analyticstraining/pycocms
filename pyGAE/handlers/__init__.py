@@ -1,20 +1,21 @@
-from AuthenticatedHandler import *
-from BaseHandler import *
-from ContentHandlers import *
-from ForgotPasswordHandler import *
-from HomeHandler import *
-from LoginHandler import *
-from LogoutHandler import *
-from ManageSubscriptionHandler import *
-from MainPageHandler import *
-from SetPasswordHandler import *
-from SignupHandler import *
-from UnauthorizedHandler import *
-from UserCreateHandler import *
-from UserEditorHandler import *
-from UserManagerHandler import *
-from UserProfileHandler import *
-from VerificationHandler import *
+from handlers.AuthenticatedHandler import *
+from handlers.BaseHandler import *
+from handlers.ContentHandlers import *
+from handlers.ForgotPasswordHandler import *
+from handlers.HomeHandler import *
+from handlers.LoginHandler import *
+from handlers.LogoutHandler import *
+from handlers.ManageSubscriptionHandler import *
+from handlers.MainPageHandler import *
+from handlers.SetPasswordHandler import *
+from handlers.SignupHandler import *
+from handlers.SubscriptionRequiredHandler import *
+from handlers.UnauthorizedHandler import *
+from handlers.UserCreateHandler import *
+from handlers.UserEditorHandler import *
+from handlers.UserManagerHandler import *
+from handlers.UserProfileHandler import *
+from handlers.VerificationHandler import *
 
 __all__ = [
     "AuthenticatedHandler",
@@ -33,6 +34,7 @@ __all__ = [
     "SetPasswordHandler",
     "SignedUpHandler",
     "SignupHandler",
+    "SubscriptionRequiredHandler",
     "UnauthorizedHandler",
     "UserCreateHandler",
     "UserEditorHandler",
