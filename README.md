@@ -26,7 +26,7 @@ etc.
 
 # Future Stuff/ wishes
 * It would be really useful to add Google/Facebook/etc. based login.
-* A proper user maangement page done as SPA
+* A proper user management page done as SPA
 * Better emails
 
 and so forth.
