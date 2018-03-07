@@ -51,7 +51,7 @@ class SignedUpHandler(BaseHandler):
         
         user_id = kwargs['user_id']
         logging.info('SignedUp Handler %s', user_id)
-        target_user = self.user_model.get_by_user_id(int(user_id))
+        target_user = self.user_model.get_by_id(int(user_id))
         if not target_user:
             self.abort(404)
         self.render_template('signedup.html', {
