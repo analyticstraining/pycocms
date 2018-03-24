@@ -51,7 +51,7 @@ def admin_required(handler):
             self.redirect(self.uri_for('login'), abort=True)
         else:
             user = self.user_model.get_by_id(user_info['user_id'])
-            if not user.is_cms_admin:
+            if user == None or not user.is_cms_admin:
                 self.redirect(self.uri_for('unauthorized'), abort=True)
             else:
                 return handler(self, *args, **kwargs)
